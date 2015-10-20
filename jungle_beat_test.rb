@@ -13,13 +13,13 @@ class JungleBeatTest < Minitest::Test
 
   def test_print_one_node
     jb = JungleBeat.new("hi")
-    assert_equal "hi", jb.print_list
+    assert_equal "hi", jb.all
   end
 
   def test_print_two_nodes
     jb = JungleBeat.new("hi")
     jb.append("there")
-    assert_equal "hi there", jb.print_list
+    assert_equal "hi there", jb.all
   end
 
   def test_count_one_node
@@ -36,7 +36,7 @@ class JungleBeatTest < Minitest::Test
   def test_prepend
     jb = JungleBeat.new("hi")
     jb.prepend("Oh,")
-    assert_equal "Oh, hi", jb.print_list
+    assert_equal "Oh, hi", jb.all
   end
 
   def test_insert
@@ -45,7 +45,7 @@ class JungleBeatTest < Minitest::Test
     jb.append("are")
     jb.append("there?")
     jb.insert(3, "you")
-    assert_equal "hi, are you there?", jb.print_list
+    assert_equal "hi, are you there?", jb.all
   end
 
   def test_includes?
@@ -58,7 +58,7 @@ class JungleBeatTest < Minitest::Test
     jb = JungleBeat.new("hi")
     jb.append("there")
     jb.pop
-    assert_equal "hi", jb.print_list
+    assert_equal "hi", jb.all
   end
 
   def test_find_return_one_value

@@ -8,7 +8,7 @@ class JungleBeat
     @head = Node.new(string)
   end
 
-  def print_list
+  def all
     this_node = @head
     # hey node, if you're not nothing..what are you?
     list = []
