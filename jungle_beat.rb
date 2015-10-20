@@ -48,12 +48,12 @@ class JungleBeat
 
   def insert(position, string)
     this_node = @head
-    position.times do |i|
+    (position-2).times do |i|
       this_node = this_node.next_node
     end
-    temp_holder = this_node
-    this_node = Node.new(string)
-    this_node.next_node = temp_holder
+    temp_holder = this_node.next_node
+    this_node.next_node = Node.new(string)
+    this_node.next_node.next_node = temp_holder
   end
 
   # def insert(position, string)

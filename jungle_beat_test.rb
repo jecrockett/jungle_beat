@@ -40,7 +40,6 @@ class JungleBeatTest < Minitest::Test
   end
 
   def test_insert
-    skip
     jb = JungleBeat.new("hi,")
     jb.append("are")
     jb.append("there?")
