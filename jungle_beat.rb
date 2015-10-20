@@ -29,6 +29,16 @@ class JungleBeat
     this_node.next_node = Node.new(string)
   end
 
+  def count
+    this_node = @head
+    count = 1
+    while this_node.next_node != nil
+      count = count + 1
+      this_node = this_node.next_node
+    end
+    count
+  end
+
 end
 
 class Node
