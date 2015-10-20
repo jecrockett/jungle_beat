@@ -80,4 +80,14 @@ class JungleBeat
     end
   end
 
+  def pop
+    this_node = @head
+    while this_node.next_node.next_node != nil
+      this_node = this_node.next_node
+    end
+    deletion = this_node.next_node.data
+    this_node.next_node = nil
+    deletion
+  end
+
 end
