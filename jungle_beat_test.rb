@@ -39,4 +39,19 @@ class JungleBeatTest < Minitest::Test
     assert_equal "Oh, hi", jb.print_list
   end
 
+  def test_insert
+    skip
+    jb = JungleBeat.new("hi,")
+    jb.append("are")
+    jb.append("there?")
+    jb.insert(3, "you")
+    assert_equal "hi, are you there?", jb.print_list
+  end
+
+  def test_includes?
+    jb = JungleBeat.new("hi")
+    refute jb.includes?("hey")
+    assert jb.includes?("hi")
+  end
+
 end

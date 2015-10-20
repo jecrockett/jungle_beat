@@ -20,6 +20,16 @@ class JungleBeat
     list.join(' ')
   end
 
+  def count
+    this_node = @head
+    counter = 1
+    while this_node.next_node != nil
+      counter = counter + 1
+      this_node = this_node.next_node
+    end
+    counter
+  end
+
   def append(string)
     this_node = @head
     # do you have a link? then it's your problem
@@ -36,16 +46,38 @@ class JungleBeat
     @head.next_node = temp_holder
   end
 
-  def count
+  def insert(position, string)
     this_node = @head
-    count = 1
-    while this_node.next_node != nil
-      count = count + 1
+    position.times do |i|
       this_node = this_node.next_node
     end
-    count
+    temp_holder = this_node
+    this_node = Node.new(string)
+    this_node.next_node = temp_holder
   end
 
+  # def insert(position, string)
+  #   this_node = @head
+  #   counter = 1
+  #   while counter < position
+  #     counter = counter + 1
+  #     this_node = this_node.next_node
+  #   end
+  #   temp_holder = this_node
+  #   this_node = Node.new(string)
+  #   this_node.next_node = temp_holder
+  # end
 
+  def includes?(string)
+    this_node = @head
+    while this_node != string && this_node.next_node != nil
+      this_node = this_node.next_node
+    end
+    if this_node.data == string
+      return true
+    else
+      return false
+    end
+  end
 
 end
