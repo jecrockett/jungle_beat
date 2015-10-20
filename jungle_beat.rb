@@ -1,3 +1,4 @@
+require_relative 'node'
 require 'pry'
 
 class JungleBeat
@@ -38,16 +39,5 @@ class JungleBeat
     end
     count
   end
-
-end
-
-class Node
-  attr_accessor :data, :next_node
-
-  def initialize(data, next_node=nil)
-    @data = data
-    @next_node = next_node
-  end
-
 
 end

@@ -1,6 +1,7 @@
 require 'minitest'
 require 'minitest/autorun'
 require_relative 'jungle_beat'
+require_relative 'node'
 require 'pry'
 
 class JungleBeatTest < Minitest::Test
@@ -19,10 +20,6 @@ class JungleBeatTest < Minitest::Test
     jb = JungleBeat.new("hi")
     jb.append("there")
     assert_equal "hi there", jb.print_list
-  end
-
-  def test_count_for_zero_nodes
-    assert_equal 0, jb.count
   end
 
   def test_count_for_one_node
