@@ -30,6 +30,12 @@ class JungleBeat
     this_node.next_node = Node.new(string)
   end
 
+  def prepend(string)
+    temp_holder = @head
+    @head = Node.new(string)
+    @head.next_node = temp_holder
+  end
+
   def count
     this_node = @head
     count = 1
@@ -39,5 +45,7 @@ class JungleBeat
     end
     count
   end
+
+
 
 end

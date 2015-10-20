@@ -11,26 +11,32 @@ class JungleBeatTest < Minitest::Test
     assert jb
   end
 
-  def test_can_print_one_node
+  def test_print_one_node
     jb = JungleBeat.new("hi")
     assert_equal "hi", jb.print_list
   end
 
-  def test_can_print_two_nodes
+  def test_print_two_nodes
     jb = JungleBeat.new("hi")
     jb.append("there")
     assert_equal "hi there", jb.print_list
   end
 
-  def test_count_for_one_node
+  def test_count_one_node
     jb = JungleBeat.new("hi")
     assert_equal 1, jb.count
   end
 
-  def test_count_for_multiple_nodes
+  def test_count_multiple_nodes
     jb = JungleBeat.new("hi")
     jb.append("there")
     assert_equal 2, jb.count
+  end
+
+  def test_prepend
+    jb = JungleBeat.new("hi")
+    jb.prepend("Oh,")
+    assert_equal "Oh, hi", jb.print_list
   end
 
 end
