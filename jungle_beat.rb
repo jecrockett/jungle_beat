@@ -90,4 +90,17 @@ class JungleBeat
     deletion
   end
 
+  def find(position, number_of_elements_to_return)
+    this_node = @head
+    (position-1).times do |i|
+      this_node = this_node.next_node
+    end
+    list = []
+    number_of_elements_to_return.times do |i|
+      list << this_node.data
+      this_node = this_node.next_node
+    end
+    list.join(' ')
+  end
+
 end
