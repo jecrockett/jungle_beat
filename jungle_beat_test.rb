@@ -6,6 +6,17 @@ require 'pry'
 
 class JungleBeatTest < Minitest::Test
 
+  def test_empty_input_still_works
+    assert_equal nil, jb = JungleBeat.new("").head
+  end
+
+  def test_can_append_nil_head
+    jb = JungleBeat.new("")
+    assert_equal 2, jb.append("tee na")
+    assert_equal "tee na", jb.all
+  end
+
+
   def test_new_node_exists
     jb = JungleBeat.new("tee")
     assert jb

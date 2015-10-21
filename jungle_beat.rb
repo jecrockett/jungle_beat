@@ -5,12 +5,16 @@ class JungleBeat
   attr_accessor :head
 
   # account for nil entry
-  def initialize(string)
-    beats = verify_beats(string)
-    @head = Node.new(beats[0])
-    this_node = @head
-    beats.shift
-    append_beats(beats)
+  def initialize(string=nil)
+    if string.empty? || string == nil
+      return nil
+    else
+      beats = verify_beats(string)
+      @head = Node.new(beats[0])
+      this_node = @head
+      beats.shift
+      append_beats(beats)
+    end
   end
 
   def all
@@ -106,6 +110,13 @@ class JungleBeat
 
   def append_beats(beats)
     number_of_beats_added = 0
+
+    if @head == nil
+      @head = Node.new(beats[0])
+      beats.shift
+      number_of_beats_added = number_of_beats_added + 1
+    end
+
     beats.each do |beat|
       find_tail.next_node = Node.new(beat)
       number_of_beats_added = number_of_beats_added + 1
@@ -139,8 +150,18 @@ class JungleBeat
     @rate
   end
 
+  def reset_rate
+    @rate = '500'
+    @rate
+  end
+
   def voice=(name='Boing')
     @voice = name
+    @voice
+  end
+
+  def reset_voice
+    @voice = 'Boing'
     @voice
   end
 
