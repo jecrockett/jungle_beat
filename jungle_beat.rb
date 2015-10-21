@@ -8,12 +8,8 @@ class JungleBeat
     beats = string.split
     @head = Node.new(beats[0])
     this_node = @head
-
     beats.shift
-    beats.each do |beat|
-      this_node.next_node = Node.new(beat)
-      this_node = this_node.next_node
-    end
+    append_beats(beats)
   end
 
   def all
@@ -38,44 +34,19 @@ class JungleBeat
 
   def append(string)
     beats = string.split
-    number_of_beats_added = 0
-    this_node = @head
-
-    while this_node.next_node != nil
-      this_node = this_node.next_node
-    end
-
-    beats.each do |beat|
-      this_node.next_node = Node.new(beat)
-      number_of_beats_added = number_of_beats_added + 1
-      this_node = this_node.next_node
-    end
-    number_of_beats_added
+    append_beats(beats)
   end
 
   def prepend(string)
-    #set up variables
     beats = string.split
     temp_holder = @head
     @head = Node.new(beats[0])
-    this_node = head
-    number_of_beats_added = 1
-
-    # remove the first value, which has already been set to @head, and iterate through the rest to create nodes
     beats.shift
-    beats.each do |beat|
-      this_node.next_node = Node.new(beat)
-      number_of_beats_added = number_of_beats_added + 1
-      this_node = this_node.next_node
-    end
 
-    # find the tail of the prepended values
-    while this_node.next_node != nil
-      this_node = this_node.next_node
-    end
+    number_of_beats_added = (append_beats(beats) + 1)
 
-    # reconnect the remaining list to the prepended values
-    this_node.next_node = temp_holder
+    find_tail.next_node = temp_holder
+
     return number_of_beats_added
   end
 
@@ -92,10 +63,11 @@ class JungleBeat
 
   def includes?(string)
     this_node = @head
-    while this_node != string && this_node.next_node != nil
+    # if this node == string break else move to the next
+    while this_node.data[0] != string && this_node.next_node != nil
       this_node = this_node.next_node
     end
-    if this_node.data == string
+    if this_node.data[0] == string
       return true
     else
       return false
@@ -127,6 +99,23 @@ class JungleBeat
       this_node = this_node.next_node
     end
     list.join(' ')
+  end
+
+  def find_tail
+    this_node = @head
+    while this_node.next_node != nil
+      this_node = this_node.next_node
+    end
+    this_node
+  end
+
+  def append_beats(beats)
+    number_of_beats_added = 0
+    beats.each do |beat|
+      find_tail.next_node = Node.new(beat)
+      number_of_beats_added = number_of_beats_added + 1
+    end
+    number_of_beats_added
   end
 
 end
