@@ -4,6 +4,7 @@ require 'pry'
 class JungleBeat
   attr_accessor :head
 
+  # account for nil entry
   def initialize(string)
     beats = verify_beats(string)
     @head = Node.new(beats[0])
@@ -65,11 +66,7 @@ class JungleBeat
     while this_node.data[0] != string && this_node.next_node != nil
       this_node = this_node.next_node
     end
-    if this_node.data[0] == string
-      return true
-    else
-      return false
-    end
+    true if this_node.data[0] == string
   end
 
   def pop(number=1)
@@ -131,5 +128,16 @@ class JungleBeat
     end
     valid_beats
   end
+
+  def play
+    `say -r 500 -v "#{@voice}" "#{self.all}"`
+    self.count
+  end
+
+  def voice=(name='Boing')
+    @voice = name
+    @voice
+  end
+
 
 end

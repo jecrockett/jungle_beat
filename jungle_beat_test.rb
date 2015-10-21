@@ -101,24 +101,19 @@ class JungleBeatTest < Minitest::Test
   end
 
   def test_reject_invalid_beats
-    jb = JungleBeat.new("tee")
+    jb = JungleBeat.new("tee la boston")
+    assert_equal "tee la", jb.all
     assert_equal 0, jb.append("boston")
-    assert_equal "tee", jb.all
-  end
-
-  def test_more_invalid
-    jb = JungleBeat.new("tee la Boston na")
-    assert_equal 3, jb.count
-    assert_equal "tee la na", jb.all
   end
 
   def test_play
-    skip
-    jb = JungleBeat.new("tee")
+    jb = JungleBeat.new("tee la dee la")
+    assert_equal 4, jb.play
   end
 
   def test_voice
-    skip
+    jb = JungleBeat.new("tee la dee la")
+    assert_equal "Alice", jb.voice = "Alice"
   end
 
   def test_reset_rate
