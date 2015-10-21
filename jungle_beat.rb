@@ -130,8 +130,13 @@ class JungleBeat
   end
 
   def play
-    `say -r 500 -v "#{@voice}" "#{self.all}"`
+    `say -r "#{@rate}" -v "#{@voice}" "#{self.all}"`
     self.count
+  end
+
+  def rate=(rate='500')
+    @rate = rate
+    @rate
   end
 
   def voice=(name='Boing')
