@@ -18,11 +18,9 @@ class JungleBeat
 
   def all
     this_node = @head
-    # hey node, if you're not nothing..what are you?
     list = []
     while this_node != nil
       list << this_node.data
-      # great, let's go to the next_node
       this_node = this_node.next_node
     end
     list.join(' ')
@@ -104,14 +102,18 @@ class JungleBeat
     end
   end
 
-  def pop
+  def pop(number=1)
     this_node = @head
-    while this_node.next_node.next_node != nil
-      this_node = this_node.next_node
+    deletions = []
+    number.times do |i|
+      while this_node.next_node.next_node != nil
+        this_node = this_node.next_node
+      end
+      deletions.unshift(this_node.next_node.data)
+      this_node.next_node = nil
+      this_node = @head
     end
-    deletion = this_node.next_node.data
-    this_node.next_node = nil
-    deletion
+    deletions.join(' ')
   end
 
   def find(position, number_of_elements_to_return)

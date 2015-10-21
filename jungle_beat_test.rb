@@ -77,19 +77,17 @@ class JungleBeatTest < Minitest::Test
     assert jb.includes?("hi")
   end
 
-  def test_include_multiple_values?
-    skip
-  end
-
   def test_pop_one_value
     jb = JungleBeat.new("hi")
     jb.append("there")
-    jb.pop
+    assert_equal "there", jb.pop
     assert_equal "hi", jb.all
   end
 
   def test_pop_multiple_values
-    skip
+    jb = JungleBeat.new("hi how are you")
+    assert_equal "how are you", jb.pop(3)
+    assert_equal "hi", jb.all
   end
 
   def test_find_return_one_value
