@@ -5,7 +5,7 @@ class JungleBeat
   attr_accessor :head
 
   def initialize(string)
-    beats = string.split
+    beats = verify_beats(string)
     @head = Node.new(beats[0])
     this_node = @head
     beats.shift
@@ -33,18 +33,17 @@ class JungleBeat
   end
 
   def append(string)
-    beats = string.split
-    append_beats(beats)
+    valid_beats = verify_beats(string)
+    append_beats(valid_beats)
   end
 
   def prepend(string)
     beats = string.split
     temp_holder = @head
     @head = Node.new(beats[0])
-    beats.shift
+    beats.shift # account for manually setting the new head with the first array value
 
     number_of_beats_added = (append_beats(beats) + 1)
-
     find_tail.next_node = temp_holder
 
     return number_of_beats_added
@@ -52,7 +51,7 @@ class JungleBeat
 
   def insert(position, string)
     this_node = @head
-    (position-2).times do |i|
+    (position-1).times do |i|
       this_node = this_node.next_node
     end
     temp_holder = this_node.next_node
@@ -63,7 +62,6 @@ class JungleBeat
 
   def includes?(string)
     this_node = @head
-    # if this node == string break else move to the next
     while this_node.data[0] != string && this_node.next_node != nil
       this_node = this_node.next_node
     end
@@ -90,7 +88,7 @@ class JungleBeat
 
   def find(position, number_of_elements_to_return)
     this_node = @head
-    (position-1).times do |i|
+    (position).times do |i|
       this_node = this_node.next_node
     end
     list = []
@@ -116,6 +114,22 @@ class JungleBeat
       number_of_beats_added = number_of_beats_added + 1
     end
     number_of_beats_added
+  end
+
+  def verify_beats(string)
+    acceptable_beats = ['tee',
+                        'dee',
+                        'deep',
+                        'bop',
+                        'boop',
+                        'la',
+                        'na']
+
+    valid_beats = []
+    string.split.each do |word|
+      valid_beats << word if acceptable_beats.include?(word)
+    end
+    valid_beats
   end
 
 end
