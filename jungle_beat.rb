@@ -5,7 +5,7 @@ class JungleBeat
   attr_accessor :head
 
   def initialize(string=nil)
-    if string == nil || string.empty?
+    if string == nil || string.empty? || string.class.to_s != "String"
       return nil
     else
       valid_beats = verify_beats(string)

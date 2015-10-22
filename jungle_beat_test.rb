@@ -14,6 +14,11 @@ class JungleBeatTest < Minitest::Test
     assert_equal nil, jb = JungleBeat.new("").head
   end
 
+  def test_non_string_input_creates_object
+    jb = JungleBeat.new(['tee', 'tee', 'tee'])
+    assert_equal nil, jb.head
+  end
+
   def test_can_append_nil_head
     jb = JungleBeat.new("")
     assert_equal 2, jb.append("tee na")
