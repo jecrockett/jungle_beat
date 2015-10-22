@@ -102,6 +102,11 @@ class JungleBeatTest < Minitest::Test
     refute jb.includes?("tee")
   end
 
+  def test_includes_with_invalid_string
+    jb = JungleBeat.new("tee")
+    refute jb.includes?("hi")
+  end
+
   def test_pop_one_value
     jb = JungleBeat.new("tee")
     jb.append("bop")

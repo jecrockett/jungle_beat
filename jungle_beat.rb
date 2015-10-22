@@ -36,7 +36,7 @@ class JungleBeat
 
   def includes?(string)
     this_node = @head
-    if this_node == nil
+    if this_node == nil || string == nil
       return false
     else
       while this_node.data[0] != string && this_node.next_node != nil
