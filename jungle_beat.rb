@@ -43,40 +43,48 @@ class JungleBeat
   end
 
   def prepend(string)
-    beats = string.split
+    valid_beats = verify_beats(string)
     temp_holder = @head
-    @head = Node.new(beats[0])
-    beats.shift # account for manually setting the new head with the first array value
+    @head = Node.new(valid_beats[0])
+    valid_beats.shift # account for manually setting the new head with the first array value
 
-    number_of_beats_added = (append_beats(beats) + 1)
+    number_of_beats_added = (append_beats(valid_beats) + 1)
     find_tail.next_node = temp_holder
 
     return number_of_beats_added
   end
 
   def insert(position, string)
-    this_node = @head
-    (position-1).times do |i|
-      this_node = this_node.next_node
+    if count < position
+      "No can do, we can't insert that far ahead!"
+    else
+      this_node = @head
+      (position-1).times do |i|
+        this_node = this_node.next_node
+      end
+
+      temp_holder = this_node.next_node
+
+      verify_beats(string).each do |beat|
+        this_node.next_node = Node.new(beat)
+        this_node = this_node.next_node
+      end
+
+      find_tail.next_node = temp_holder
+      return all
     end
-
-    temp_holder = this_node.next_node
-
-    verify_beats(string).each do |beat|
-      this_node.next_node = Node.new(beat)
-      this_node = this_node.next_node
-    end
-
-    find_tail.next_node = temp_holder
-    return all
   end
 
   def includes?(string)
     this_node = @head
-    while this_node.data[0] != string && this_node.next_node != nil
-      this_node = this_node.next_node
+    if this_node == nil
+      return false
+    else
+      while this_node.data[0] != string && this_node.next_node != nil
+        this_node = this_node.next_node
+      end
+      true if this_node.data[0] == string
     end
-    true if this_node.data[0] == string
   end
 
   def pop(number=1)
@@ -142,6 +150,8 @@ class JungleBeat
     acceptable_beats = ['tee',
                         'dee',
                         'deep',
+                        'dep',
+                        'dop',
                         'bop',
                         'boop',
                         'la',
@@ -155,8 +165,8 @@ class JungleBeat
   end
 
   def play
-    `say -r "#{@rate}" -v "#{@voice}" "#{self.all}"`
-    self.count
+    `say -r "#{@rate}" -v "#{@voice}" "#{all}"`
+    count
   end
 
   def rate=(rate='500')
@@ -170,7 +180,7 @@ class JungleBeat
   end
 
   def voice=(name='Boing')
-    @voice = name
+    @voice = name.capitalize
     @voice
   end
 

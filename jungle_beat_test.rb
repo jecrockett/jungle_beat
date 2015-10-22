@@ -75,6 +75,7 @@ class JungleBeatTest < Minitest::Test
   def test_insert_one_value
     jb = JungleBeat.new("tee dee bop")
     assert_equal "tee dee la bop", jb.insert(2, "la")
+    assert_equal "tee dee la bop na", jb.insert(4, "na")
   end
 
   def test_insert_multiple_values
@@ -84,13 +85,19 @@ class JungleBeatTest < Minitest::Test
   end
 
   def test_insert_too_many_values
-    skip
+    jb = JungleBeat.new("tee la tee la")
+    assert_equal "No can do, we can't insert that far ahead!", jb.insert(5, "boop")
   end
 
   def test_includes?
     jb = JungleBeat.new("tee")
     refute jb.includes?("dee")
     assert jb.includes?("tee")
+  end
+
+  def test_includes_with_empty_list
+    jb = JungleBeat.new()
+    refute jb.includes?("tee")
   end
 
   def test_pop_one_value
@@ -150,12 +157,6 @@ class JungleBeatTest < Minitest::Test
   def test_reset_voice
     jb = JungleBeat.new("tee la dee la")
     assert_equal 'Boing', jb.reset_voice
-  end
-
-  def test_edge_cases
-    skip
-    # insert into position that doesnt exist
-    #   i.e. insert X at position 5 when bop dee 3 nodes
   end
 
 end
