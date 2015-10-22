@@ -4,16 +4,13 @@ require 'pry'
 class JungleBeat
   attr_accessor :head
 
-  # account for nil entry
   def initialize(string=nil)
     if string == nil || string.empty?
       return nil
     else
-      beats = verify_beats(string)
-      @head = Node.new(beats[0])
-      this_node = @head
-      beats.shift
-      append_beats(beats)
+      valid_beats = verify_beats(string)
+      assign_new_head(valid_beats)
+      append_beats(valid_beats)
     end
   end
 
@@ -37,6 +34,18 @@ class JungleBeat
     counter
   end
 
+  def includes?(string)
+    this_node = @head
+    if this_node == nil
+      return false
+    else
+      while this_node.data[0] != string && this_node.next_node != nil
+        this_node = this_node.next_node
+      end
+      true if this_node.data[0] == string
+    end
+  end
+
   def append(string)
     valid_beats = verify_beats(string)
     append_beats(valid_beats)
@@ -45,8 +54,7 @@ class JungleBeat
   def prepend(string)
     valid_beats = verify_beats(string)
     temp_holder = @head
-    @head = Node.new(valid_beats[0])
-    valid_beats.shift # account for manually setting the new head with the first array value
+    assign_new_head(valid_beats)
 
     number_of_beats_added = (append_beats(valid_beats) + 1)
     find_tail.next_node = temp_holder
@@ -58,32 +66,21 @@ class JungleBeat
     if count < position
       "No can do, we can't insert that far ahead!"
     else
-      this_node = @head
-      (position-1).times do |i|
-        this_node = this_node.next_node
+      if position == 0
+        prepend(string)
+        return all
+      else
+        this_node = iterate(position)
+        temp_holder = this_node.next_node
+
+        verify_beats(string).each do |beat|
+          this_node.next_node = Node.new(beat)
+          this_node = this_node.next_node
+        end
+
+        find_tail.next_node = temp_holder
+        return all
       end
-
-      temp_holder = this_node.next_node
-
-      verify_beats(string).each do |beat|
-        this_node.next_node = Node.new(beat)
-        this_node = this_node.next_node
-      end
-
-      find_tail.next_node = temp_holder
-      return all
-    end
-  end
-
-  def includes?(string)
-    this_node = @head
-    if this_node == nil
-      return false
-    else
-      while this_node.data[0] != string && this_node.next_node != nil
-        this_node = this_node.next_node
-      end
-      true if this_node.data[0] == string
     end
   end
 
@@ -109,13 +106,10 @@ class JungleBeat
     if count < (position + number_of_elements_to_return)
       "No can do, we don't have that many values beyond that position!"
     else
-      this_node = @head
-      (position).times do |i|
-        this_node = this_node.next_node
-      end
+      this_node = iterate(position)
       list = []
       number_of_elements_to_return.times do |i|
-        list << this_node.data
+        list << this_node.next_node.data
         this_node = this_node.next_node
       end
       list.join(' ')
@@ -134,8 +128,7 @@ class JungleBeat
     number_of_beats_added = 0
 
     if @head == nil
-      @head = Node.new(beats[0])
-      beats.shift
+      assign_new_head(beats)
       number_of_beats_added = number_of_beats_added + 1
     end
 
@@ -164,6 +157,20 @@ class JungleBeat
     valid_beats
   end
 
+  def iterate(position) # iterates to one node before the requested position
+    this_node = @head
+    (position-1).times do |i|
+      this_node = this_node.next_node
+    end
+    this_node
+  end
+
+# accounts for manually setting the new head to the first beat, and updating the array to reflect the remaining beats to interate through
+  def assign_new_head(beats)
+    @head = Node.new(beats[0])
+    beats.shift
+  end
+
   def play
     `say -r "#{@rate}" -v "#{@voice}" "#{all}"`
     count
@@ -188,6 +195,5 @@ class JungleBeat
     @voice = 'Boing'
     @voice
   end
-
 
 end

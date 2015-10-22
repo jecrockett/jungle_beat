@@ -46,12 +46,13 @@ class JungleBeatTest < Minitest::Test
   def test_initialize_multiple_nodes
     jb = JungleBeat.new("tee la dee bop")
     assert_equal 4, jb.count
+    assert_equal "tee la dee bop", jb.all
   end
 
   def test_append_one_node
     jb = JungleBeat.new("tee")
     assert_equal 1, jb.append("bop")
-    assert_equal 2, jb.count
+    assert_equal "tee bop", jb.all
   end
 
   def test_append_multiple_nodes
@@ -62,7 +63,7 @@ class JungleBeatTest < Minitest::Test
 
   def test_prepend_one_node
     jb = JungleBeat.new("tee")
-    jb.prepend("la")
+    assert_equal 1, jb.prepend("la")
     assert_equal "la tee", jb.all
   end
 
@@ -76,6 +77,7 @@ class JungleBeatTest < Minitest::Test
     jb = JungleBeat.new("tee dee bop")
     assert_equal "tee dee la bop", jb.insert(2, "la")
     assert_equal "tee dee la bop na", jb.insert(4, "na")
+    assert_equal "la tee dee la bop na", jb.insert(0, "la")
   end
 
   def test_insert_multiple_values
@@ -126,6 +128,8 @@ class JungleBeatTest < Minitest::Test
   def test_find_return_multiple_values
     jb = JungleBeat.new("tee na dee la")
     assert_equal "dee la", jb.find(2, 2)
+    jb.append ("la dee la la la")
+    assert_equal "dee la la", jb.find(5, 3)
   end
 
   def test_find_too_many_values
