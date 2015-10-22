@@ -6,7 +6,7 @@ class JungleBeat
 
   # account for nil entry
   def initialize(string=nil)
-    if string.empty? || string == nil
+    if string == nil || string.empty?
       return nil
     else
       beats = verify_beats(string)
@@ -74,17 +74,21 @@ class JungleBeat
   end
 
   def pop(number=1)
-    this_node = @head
-    deletions = []
-    number.times do |i|
-      while this_node.next_node.next_node != nil
-        this_node = this_node.next_node
-      end
-      deletions.unshift(this_node.next_node.data)
-      this_node.next_node = nil
+    if count < number
+      a = "No can do, we don't have that much shit to pop!"
+    else
       this_node = @head
+      deletions = []
+      number.times do |i|
+        while this_node.next_node.next_node != nil
+          this_node = this_node.next_node
+        end
+        deletions.unshift(this_node.next_node.data)
+        this_node.next_node = nil
+        this_node = @head
+      end
+      deletions.join(' ')
     end
-    deletions.join(' ')
   end
 
   def find(position, number_of_elements_to_return)

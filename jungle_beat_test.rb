@@ -6,7 +6,11 @@ require 'pry'
 
 class JungleBeatTest < Minitest::Test
 
-  def test_empty_input_still_works
+  def test_nil_input_still_works
+    assert_equal nil, JungleBeat.new(nil).head
+  end
+
+  def test_empty_string_input_still_works
     assert_equal nil, jb = JungleBeat.new("").head
   end
 
@@ -15,7 +19,6 @@ class JungleBeatTest < Minitest::Test
     assert_equal 2, jb.append("tee na")
     assert_equal "tee na", jb.all
   end
-
 
   def test_new_node_exists
     jb = JungleBeat.new("tee")
@@ -101,6 +104,11 @@ class JungleBeatTest < Minitest::Test
     assert_equal "tee", jb.all
   end
 
+  def test_pop_too_many_values
+      jb = JungleBeat.new("tee da tee da")
+      assert_equal "No can do, we don't have that much shit to pop!", jb.pop(5)
+  end
+
   def test_find_return_one_value
     jb = JungleBeat.new("tee na dee la")
     assert_equal "dee", jb.find(2, 1)
@@ -128,11 +136,13 @@ class JungleBeatTest < Minitest::Test
   end
 
   def test_reset_rate
-    skip
+    jb = JungleBeat.new("tee la dee la")
+    assert_equal '500', jb.reset_rate
   end
 
   def test_reset_voice
-    skip
+    jb = JungleBeat.new("tee la dee la")
+    assert_equal 'Boing', jb.reset_voice
   end
 
   def test_edge_cases
