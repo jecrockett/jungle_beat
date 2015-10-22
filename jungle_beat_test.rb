@@ -99,12 +99,13 @@ class JungleBeatTest < Minitest::Test
 
   def test_includes_with_empty_list
     jb = JungleBeat.new()
-    refute jb.includes?("tee")
+    assert_equal false, jb.includes?("tee")
   end
 
   def test_includes_with_invalid_string
     jb = JungleBeat.new("tee")
-    refute jb.includes?("hi")
+    assert_equal false, jb.includes?("hi")
+    assert_equal false, jb.includes?(nil)
   end
 
   def test_pop_one_value
