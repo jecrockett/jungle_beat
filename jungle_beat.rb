@@ -59,9 +59,15 @@ class JungleBeat
     (position-1).times do |i|
       this_node = this_node.next_node
     end
+
     temp_holder = this_node.next_node
-    this_node.next_node = Node.new(string)
-    this_node.next_node.next_node = temp_holder
+
+    verify_beats(string).each do |beat|
+      this_node.next_node = Node.new(beat)
+      this_node = this_node.next_node
+    end
+
+    find_tail.next_node = temp_holder
     return all
   end
 
@@ -75,7 +81,7 @@ class JungleBeat
 
   def pop(number=1)
     if count < number
-      a = "No can do, we don't have that much shit to pop!"
+      "No can do, we don't have that much shit to pop!"
     else
       this_node = @head
       deletions = []
@@ -92,16 +98,20 @@ class JungleBeat
   end
 
   def find(position, number_of_elements_to_return)
-    this_node = @head
-    (position).times do |i|
-      this_node = this_node.next_node
+    if count < (position + number_of_elements_to_return)
+      "No can do, we don't have that many values beyond that position!"
+    else
+      this_node = @head
+      (position).times do |i|
+        this_node = this_node.next_node
+      end
+      list = []
+      number_of_elements_to_return.times do |i|
+        list << this_node.data
+        this_node = this_node.next_node
+      end
+      list.join(' ')
     end
-    list = []
-    number_of_elements_to_return.times do |i|
-      list << this_node.data
-      this_node = this_node.next_node
-    end
-    list.join(' ')
   end
 
   def find_tail

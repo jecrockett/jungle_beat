@@ -73,16 +73,18 @@ class JungleBeatTest < Minitest::Test
   end
 
   def test_insert_one_value
-    jb = JungleBeat.new("tee")
-    jb.append("dee")
-    jb.append("bop")
+    jb = JungleBeat.new("tee dee bop")
     assert_equal "tee dee la bop", jb.insert(2, "la")
   end
 
   def test_insert_multiple_values
-    skip # failing. instead of add to position 3 it replaces position 2 with the inserted value. why?
-    jb = JungleBeat.new("tee dee bop?")
-    assert_equal "tee dee la bop?", jb.insert(3, "la")
+    jb = JungleBeat.new("tee la tee la")
+    assert_equal "tee la boop boop tee la", jb.insert(2, "boop boop")
+    assert_equal 6, jb.count
+  end
+
+  def test_insert_too_many_values
+    skip
   end
 
   def test_includes?
@@ -119,6 +121,11 @@ class JungleBeatTest < Minitest::Test
     assert_equal "dee la", jb.find(2, 2)
   end
 
+  def test_find_too_many_values
+    jb = JungleBeat.new("tee na dee la")
+    assert_equal "No can do, we don't have that many values beyond that position!", jb.find(3, 3)
+  end
+
   def test_reject_invalid_beats
     jb = JungleBeat.new("tee la boston")
     assert_equal "tee la", jb.all
@@ -147,12 +154,8 @@ class JungleBeatTest < Minitest::Test
 
   def test_edge_cases
     skip
-    # pop more elements than exist
     # insert into position that doesnt exist
     #   i.e. insert X at position 5 when bop dee 3 nodes
-    # find values that dont exist
-    #   i.e. find (4, 10) when bop dee 6 elements
-    #   i.e. find (6, 1) when bop dee 5 elements
   end
 
 end
